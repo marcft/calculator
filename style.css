@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* VARIABLES */
+
+:root {
+    --BORDER: 1.5px solid black;
+}
+
+/* GENERAL STYLES */
+
+html {
+    min-height: 100vh;
+    position: relative;
+}
+
+body {
+    background-color: rgb(230, 243, 255);
+    font-family: 'Nunito', 'Times  New Roman', sans-serif;
+    font-size: 1.2rem;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+/* CALCULATOR */
+
+main {
+    margin: 50px auto 30px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator {
+    margin: 20px;
+    padding: 20px;
+    width: 400px;
+    height: 550px;
+    background-color: rgb(140, 140, 140);
+    border: var(--BORDER);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.calculator > .screen {
+    align-self: stretch;
+    height: 200px;
+    background-color: whitesmoke;
+    border: var(--BORDER);
+    border-radius: 5px;
+}
+
+.calc-body > .first-row,
+.calc-body > .second-row,
+.calc-body > .third-row,
+.calc-body > .fourth-row,
+.calc-body > .fifth-row {
+    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.first-row > button,
+.second-row > button,
+.third-row > button,
+.fourth-row > button,
+.fifth-row > button {
+    flex: 1;
+    height: 60px;
+    border-radius: 5px;
+    border: var(--BORDER);
+}
+
+.first-row > button#clear {
+    background-color: rgb(255, 112, 112);
+}
+
+.first-row > button#clear:hover {
+    background-color: rgb(239, 106, 106);
+}
+
+.first-row > button#clear:active {
+    background-color: rgb(217, 96, 96);
+}
+
+.first-row > button#delete {
+    background-color: rgb(128, 128, 255);
+}
+
+.first-row > button#delete:hover {
+    background-color: rgb(117, 117, 232);
+}
+
+.first-row > button#delete:active {
+    background-color: rgb(108, 108, 216);
+}
+
+.calc-body button:hover {
+    background-color: whitesmoke;
+}
+
+.calc-body button:hover {
+    background-color: rgb(210, 210, 210);
+}
+
+.calc-body button:active {
+    background-color: rgb(190, 190, 190);
+}
+
+/* FOOTER */
+
+footer {
+    color: rgb(0, 0, 0, 0.9);
+    width: 200px;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
