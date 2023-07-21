@@ -39,6 +39,11 @@ equalButton.addEventListener('click', () => {
     }
 });
 
+document.addEventListener('keydown', (e) => {
+    //TODO fer recorrido de dataset de tts botons i si key es igual a  uno cridar a la funcio de ixe boto;
+    console.log(e);
+})
+
 function writeNumber() {
     let number = lowerScreen.textContent;
     const buttonValue = this.dataset.value;
@@ -95,9 +100,6 @@ function calculateResult(lowerScreenNum) {
 
     //If result does not fit on the screen
     if (resultLength > 11) {
-        //Truncate really low numbers
-        if (result < 0.000000001) return 0;
-
         //Really long results contain exponents [e+21]
         if (strResult.includes('e')) {
             let longResult = strResult;
@@ -106,14 +108,11 @@ function calculateResult(lowerScreenNum) {
             return longResult + suffix;
         }
 
-        let reduced = strResult.slice(0, 8);
-        if (reduced.includes('.')) {
-            reduced = strResult.slice(0, 11);
-            return reduced;
+        if (strResult.includes('.') && strResult.indexOf('.') < 10) {
+            return strResult.slice(0, 11);
 
         } else {
-            //problema si . esta entre 8 i 11
-            // 6666666.9999
+            let reduced = strResult.slice(0, 8);
             let resultTruncate = Math.trunc(result);
             const truncateLength = `${resultTruncate}`.length;
             return `${reduced}e${truncateLength - 8}`;
