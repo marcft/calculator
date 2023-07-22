@@ -14,13 +14,11 @@ const deleteButton = document.getElementById('delete');
 // EVENT LISTENERS
 
 clearButton.addEventListener('click', () => {
-    upperScreen.textContent = '';
-    lowerScreen.textContent = '';
+    clearScreen();
 });
 
 deleteButton.addEventListener('click', () => {
-    let number = lowerScreen.textContent;
-    lowerScreen.textContent = number.slice(0, number.length - 1);
+    deleteDigit();
 });
 
 writeButtons.forEach(button => button.addEventListener('click', (e) => {
@@ -36,15 +34,27 @@ equalButton.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (e) => {
-    console.log(e);
     if (numberValues.includes(e.key)) {
         writeNumber(e.key);
 
     } else if (operationValues.includes(e.key)) {
         if (e.key === '=' || e.key === 'Enter') writeEquality();
         else writeOperation(e.key);
-    }
-})
+
+    } 
+    else if (e.key === 'Backspace') deleteDigit();
+    else if (e.key.toLowerCase() === 'c') clearScreen();
+});
+
+function clearScreen() {
+    upperScreen.textContent = '';
+    lowerScreen.textContent = '';
+}
+
+function deleteDigit() {
+    let number = lowerScreen.textContent;
+    lowerScreen.textContent = number.slice(0, number.length - 1);
+}
 
 function writeNumber(buttonValue) {
     let lowerScreenNum = lowerScreen.textContent;
