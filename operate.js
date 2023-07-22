@@ -1,4 +1,6 @@
 // GLOBAL VARIABLES
+const numberValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
+const operationValues = ['+', '-', '*', '/', '=', 'Enter'];
 
 const upperScreen = document.querySelector('.upper-screen');
 const lowerScreen = document.querySelector('.lower-screen');
@@ -21,13 +23,75 @@ deleteButton.addEventListener('click', () => {
     lowerScreen.textContent = number.slice(0, number.length - 1);
 });
 
-writeButtons.forEach(button => button.addEventListener('click', writeNumber));
+writeButtons.forEach(button => button.addEventListener('click', (e) => {
+    writeNumber(e.target.dataset.value);
+}));
 
-operationButtons.forEach(operation => operation.addEventListener('click', writeOperation));
+operationButtons.forEach(operation => operation.addEventListener('click', () => {
+    writeOperation(e.target.dataset.value);
+}));
 
 equalButton.addEventListener('click', () => {
+    writeEquality();
+});
+
+document.addEventListener('keydown', (e) => {
+    console.log(e);
+    if (numberValues.includes(e.key)) {
+        writeNumber(e.key);
+
+    } else if (operationValues.includes(e.key)) {
+        if (e.key === '=' || e.key === 'Enter') writeEquality();
+        else writeOperation(e.key);
+    }
+})
+
+function writeNumber(buttonValue) {
+    let lowerScreenNum = lowerScreen.textContent;
+
+    if (lowerScreenNum === '0' && buttonValue !== '.') {
+        lowerScreenNum = '';
+    }
+    // Reset all if last equation solved
+    if (upperScreen.textContent.includes('=')) {
+        lowerScreenNum = '';
+        upperScreen.textContent = '';
+    }
+    //Only writes if it fits on the screen
+    if (`${lowerScreenNum}`.length < 11) {
+        lowerScreen.textContent = lowerScreenNum + buttonValue;
+    }
+}
+
+function writeOperation(buttonValue) {
+    let lowerScreenNum = lowerScreen.textContent;
+    if (lowerScreenNum.startsWith('.')) lowerScreenNum = '0' + lowerScreenNum;
+    if(!isWrittenCorrectly(lowerScreenNum)) {
+        alert('Write the number correctly!');
+        return;
+    }
+
+    if (upperScreen.textContent === '' || upperScreen.textContent.includes('=')) {
+        upperScreen.textContent = `${lowerScreenNum} ${buttonValue}`;
+    } else {
+        const result = calculateResult(lowerScreenNum);
+        if (!isFinite(result)) {
+            alert('You can\'t divide by 0!')
+            return;
+        }
+        upperScreen.textContent = `${result} ${buttonValue}`;
+    }
+    
+    lowerScreen.textContent = '';
+}
+
+function writeEquality() {
     const lower = lowerScreen.textContent;
-    const upper = upperScreen.textContent; 
+    const upper = upperScreen.textContent;
+    if(!isWrittenCorrectly(lower)) {
+        alert('Write the number correctly!');
+        return;
+    }
     if (!(lower === '') && !(upper === '') && !upper.includes('=')) {
         const result = calculateResult(lower);
         if (!isFinite(result)) {
@@ -37,50 +101,6 @@ equalButton.addEventListener('click', () => {
         upperScreen.textContent = `${upper} ${lower} =`;
         lowerScreen.textContent = result;
     }
-});
-
-document.addEventListener('keydown', (e) => {
-    //TODO fer recorrido de dataset de tts botons i si key es igual a  uno cridar a la funcio de ixe boto;
-    console.log(e);
-})
-
-function writeNumber() {
-    let number = lowerScreen.textContent;
-    const buttonValue = this.dataset.value;
-    if (number === '0' && buttonValue !== '.') {
-        number = '';
-    }
-    // Reset all if last equation solved
-    if (upperScreen.textContent.includes('=')) {
-        number = '';
-        upperScreen.textContent = '';
-    }
-    //Only writes if it fits on the screen
-    if (`${number}`.length < 11) {
-        lowerScreen.textContent = number + buttonValue;
-    }
-}
-
-function writeOperation() {
-    let number = lowerScreen.textContent;
-    if (number.startsWith('.')) number = '0' + number;
-    if(!isWrittenCorrectly(number)) {
-        alert('Write the number correctly!');
-        return;
-    };
-
-    if (upperScreen.textContent === '' || upperScreen.textContent.includes('=')) {
-        upperScreen.textContent = `${number} ${this.dataset.value}`;
-    } else {
-        const result = calculateResult(number);
-        if (!isFinite(result)) {
-            alert('You can\'t divide by 0!')
-            return;
-        }
-        upperScreen.textContent = `${result} ${this.dataset.value}`;
-    }
-    
-    lowerScreen.textContent = '';
 }
 
 function isWrittenCorrectly(number) {
