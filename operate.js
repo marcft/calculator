@@ -34,13 +34,16 @@ equalButton.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (e) => {
+    
+
     if (numberValues.includes(e.key)) {
         writeNumber(e.key);
 
     } else if (operationValues.includes(e.key)) {
         if (e.key === '=' || e.key === 'Enter') writeEquality();
-        else writeOperation(e.key);
-
+        else {
+            e.key === '/' ? writeOperation('÷') : writeOperation(e.key);
+        }
     } 
     else if (e.key === 'Backspace') deleteDigit();
     else if (e.key.toLowerCase() === 'c') clearScreen();
