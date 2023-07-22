@@ -59,7 +59,7 @@ main {
 
 .calculator > .screen {
     align-self: stretch;
-    height: 200px;
+    flex: 1;
     background-color: whitesmoke;
     border: var(--BORDER);
     border-radius: 5px;
@@ -133,7 +133,7 @@ main {
     background-color: rgb(108, 108, 216);
 }
 
-.calc-body button:hover {
+.calc-body button {
     background-color: whitesmoke;
 }
 
