@@ -1,6 +1,6 @@
 // GLOBAL VARIABLES
 const numberValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
-const operationValues = ['+', '-', '*', '/', '=', 'Enter'];
+const operationValues = ['+', '-', '*', '/', '='];
 
 const upperScreen = document.querySelector('.upper-screen');
 const lowerScreen = document.querySelector('.lower-screen');
@@ -25,7 +25,7 @@ writeButtons.forEach(button => button.addEventListener('click', (e) => {
     writeNumber(e.target.dataset.value);
 }));
 
-operationButtons.forEach(operation => operation.addEventListener('click', () => {
+operationButtons.forEach(operation => operation.addEventListener('click', (e) => {
     writeOperation(e.target.dataset.value);
 }));
 
@@ -34,15 +34,16 @@ equalButton.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (e) => {
-    
 
     if (numberValues.includes(e.key)) {
         writeNumber(e.key);
 
     } else if (operationValues.includes(e.key)) {
-        if (e.key === '=' || e.key === 'Enter') writeEquality();
+        if (e.key === '=' ) writeEquality();
         else {
-            e.key === '/' ? writeOperation('÷') : writeOperation(e.key);
+            e.key === '/' ? writeOperation('÷') : 
+            e.key === '*' ? writeOperation('x') :
+            writeOperation(e.key);
         }
     } 
     else if (e.key === 'Backspace') deleteDigit();
@@ -169,7 +170,7 @@ function operate(x, operator, y) {
             return divide(x, y);
     
         default:
-            throw 'ERROR';
+            throw 'Operator ERROR';
     }
 }
 
